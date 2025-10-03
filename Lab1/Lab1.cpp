@@ -2,20 +2,22 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include "Dealer.h"
+#include "Card.h"
+#include <stdexcept>
 using namespace std;
 
-
-map<int, int> getFrequencies(const vector<int>& stacks) {
-    map<int, int> freq;
+std::map<int, int> getFrequencies(const std::vector<int>& stacks) {
+    std::map<int, int> freq;
     for (int len : stacks) {
         freq[len]++;
     }
     return freq;
 }
 
-void printPercentages(const vector<int>& stacks) {
+void printPercentages(const std::vector<int>& stacks) {
     int n = stacks.size();
-    map<int, int> freq = getFrequencies(stacks);
+    std::map<int, int> freq = getFrequencies(stacks);
 
     cout << "Percentage of stacks by length:\n";
     for (auto [len, count] : freq) {
@@ -24,21 +26,21 @@ void printPercentages(const vector<int>& stacks) {
     }
 }
 
-void printModes(const vector<int>& stacks) {
-    map<int, int> freq = getFrequencies(stacks);
+void printModes(const std::vector<int>& stacks) {
+    std::map<int, int> freq = getFrequencies(stacks);
 
     int bestCount = 0;
     for (auto& [len, count] : freq) {
         if (count > bestCount) bestCount = count;
     }
 
-    vector<int> modes;
+    std::vector<int> modes;
     for (auto& [len, count] : freq) {
         if (count == bestCount) modes.push_back(len);
     }
 
     cout << "Most frequent length(s): ";
-    for (size_t i = 0; i < modes.size(); i++) {
+    for (std::size_t i = 0; i < modes.size(); i++) {
         cout << modes[i];
         if (i + 1 < modes.size()) cout << ", ";
     }
@@ -63,17 +65,34 @@ void printMedian(const vector<int>& stacks) {
 
 
 int main() {
-    vector<int> stacks = { 2, 3, 5, 5, 3, 2 };
+    try {
+        int cards_per_suit, n;
+        cout << "Enter the number of cards per suit ";
+        cin >> cards_per_suit;
+        if (cards_per_suit < 1) throw std::invalid_argument("There must be at least 1 card in the deck.");
+        cout << "\nEnter the number of cards to deal: ";
+        cin >> n;
+        if (n > cards_per_suit * 4) throw std::invalid_argument("The number of cards to be dealt cannot exceed the number of cards in the deck.");
 
-    if (stacks.empty()) {
-        cout << "No data.\n";
+        auto stacks = createStacks(cards_per_suit, n);
+
+        if (stacks.empty()) {
+            cout << "No data.\n";
+            return 0;
+        }
+
+        printPercentages(stacks);
+        printModes(stacks);
+        printAverage(stacks);
+        printMedian(stacks);
+
         return 0;
     }
 
-    printPercentages(stacks);
-    printModes(stacks);
-    printAverage(stacks);
-    printMedian(stacks);
+    catch (const std::exception& e) {
+        cout << e.what() << endl;
+        return 1;
+    }
 
     return 0;
 }

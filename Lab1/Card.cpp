@@ -4,7 +4,7 @@
 
 using namespace std;
 
-strong_ordering Card::operator<=>(const Card& other) const {
+std::strong_ordering Card::operator<=>(const Card& other) const {
     return rank <=> other.rank;
 }
 

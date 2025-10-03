@@ -1,11 +1,10 @@
 #include "Dealer.h"
 
-using namespace std;
+using namespace std; 
 
 Dealer::Dealer(int cards_per_suit) : cards_per_suit(cards_per_suit), pos(0) {
-    if (cards_per_suit < 1) throw invalid_argument("cards_per_suit must be >= 1");
     random_device r;
-    random = mt19937(r());
+    random = std::mt19937(r());
     newDeck();
 }
 
@@ -18,21 +17,21 @@ Card Dealer::operator()() {
 
 void Dealer::newDeck() {
     deck.clear();
-    deck.reserve(4 * static_cast<size_t>(cards_per_suit));
+    deck.reserve(4 * static_cast<std::size_t>(cards_per_suit));
     for (int suit = 0; suit < 4; ++suit) {
         for (int rank = 1; rank <= cards_per_suit; ++rank) {
             deck.push_back(Card{ rank, suit });
         }
     }
     
-    shuffle(deck.begin(), deck.end(), random);
+    std::shuffle(deck.begin(), deck.end(), random);
     pos = 0;
 }
 
-vector<int> createStacks(int cards_per_suit, int n) {
+std::vector<int> createStacks(int cards_per_suit, int n) {
     Dealer dealer(cards_per_suit);
     if (n <= 0) return {};
-    vector<int> stacks;
+    std::vector<int> stacks;
 
     Card prev = dealer();
     int current_len = 1;
