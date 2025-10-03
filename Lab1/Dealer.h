@@ -10,13 +10,15 @@ using namespace std;
 class Dealer {
 private:
 	int cards_per_suit;
-	vector<card> deck;
-	size_t pos = 0;
-	mt19937& val;
+	vector<Ñard> deck;
+	size_t pos;
+	mt19937 random;
 
 	void newDeck();
 
 public:
-	Dealer(int cards_per_suit, mt19937& val);
+	Dealer(int cards_per_suit);
 	Card operator()();
 };
+
+vector<int> createStacks(int cards_per_suit, int n);
