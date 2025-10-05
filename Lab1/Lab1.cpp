@@ -67,19 +67,14 @@ void printMedian(const vector<int>& stacks) {
 int main() {
     try {
         int cards_per_suit, n;
-        cout << "Enter the number of cards per suit ";
+        cout << "Enter the number of cards per suit: ";
         cin >> cards_per_suit;
         if (cards_per_suit < 1) throw std::invalid_argument("There must be at least 1 card in the deck.");
         cout << "\nEnter the number of cards to deal: ";
         cin >> n;
-        if (n > cards_per_suit * 4) throw std::invalid_argument("The number of cards to be dealt cannot exceed the number of cards in the deck.");
+        if (n < 1) throw std::invalid_argument("It is impossible to form stacks from such a number of cards.");
 
         auto stacks = createStacks(cards_per_suit, n);
-
-        if (stacks.empty()) {
-            cout << "No data.\n";
-            return 0;
-        }
 
         printPercentages(stacks);
         printModes(stacks);
@@ -93,6 +88,4 @@ int main() {
         cout << e.what() << endl;
         return 1;
     }
-
-    return 0;
 }

@@ -30,7 +30,6 @@ void Dealer::newDeck() {
 
 std::vector<int> createStacks(int cards_per_suit, int n) {
     Dealer dealer(cards_per_suit);
-    if (n <= 0) return {};
     std::vector<int> stacks;
 
     Card prev = dealer();
@@ -45,6 +44,7 @@ std::vector<int> createStacks(int cards_per_suit, int n) {
             current_len = 1;
         }
         prev = current;
+        if (current_len > cards_per_suit) current_len = cards_per_suit;
     }
     stacks.push_back(current_len);
     return stacks;
