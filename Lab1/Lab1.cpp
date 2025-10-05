@@ -1,4 +1,8 @@
-﻿#include <iostream>
+//Автори: Данченко Анастасія, Гопко Анастасія група К-27
+//Варіант 4
+//Компілятор: Microsoft (R) C/C++ Optimizing Compiler
+
+#include <iostream>
 #include <vector>
 #include <map>
 #include <algorithm>
